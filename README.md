@@ -342,7 +342,7 @@ docker exec -it sc_ubuntu_desktop nvcc --version
 
 ```
 sc_ubuntu_desktop/
-├── Dockerfile              # Docker image definition (based on CUDA 12.4.1)
+├── Dockerfile             # Docker image definition (based on CUDA 12.4.1)
 ├── build.sh               # Build script
 ├── run.sh                 # Run script
 ├── entrypoint.sh          # Container startup script
