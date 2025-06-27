@@ -7,7 +7,7 @@
 set -e
 
 # Configuration
-IMAGE_NAME="ueoo/sc-ubuntu-desktop"
+IMAGE_NAME="sc-ubuntu-desktop"
 TAG="20.04-cuda124-xgl-vnc"
 DOCKERFILE="Dockerfile"
 

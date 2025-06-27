@@ -6,9 +6,9 @@
 set -e
 
 # Configuration
-IMAGE_NAME="ueoo/sc-ubuntu-desktop"
+IMAGE_NAME="sc-ubuntu-desktop"
 TAG="20.04-cuda124-xgl-vnc"
-CONTAINER_NAME="yxgl"
+CONTAINER_NAME="xgl"
 HOSTNAME="ubuntu-desktop"
 HOST_PORT="8080"
 CONTAINER_PORT="8080"
