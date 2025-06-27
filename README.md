@@ -14,7 +14,7 @@ This docker image is dedicated to the Stanford Compute cluster.
 
 ## System Requirements
 
-> All components preinstalled on SC cluster
+> All components are preinstalled on the SC cluster.
 - Docker
 - NVIDIA Container Toolkit
 - NVIDIA Driver
