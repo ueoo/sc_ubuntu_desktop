@@ -2,7 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-# Supported base images: Ubuntu 24.04, 22.04, 20.04
+# Supported base images: only tested on Ubuntu 20.04
+# On SC cluster, the host OS is Ubuntu 20.04, newer version of Ubuntu is not supported
 ARG DISTRIB_IMAGE=nvidia/cuda
 ARG DISTRIB_RELEASE=12.4.1-cudnn-devel-ubuntu20.04
 FROM ${DISTRIB_IMAGE}:${DISTRIB_RELEASE}
@@ -13,7 +14,7 @@ LABEL maintainer="https://yuegao.me"
 
 ARG DEBIAN_FRONTEND=noninteractive
 # Configure rootless user environment for constrained conditions without escalated root privileges inside containers
-ARG TZ=UTC
+ARG TZ="America/Los_Angeles"
 ENV PASSWD=mypasswd
 RUN apt-get clean && apt-get update && apt-get dist-upgrade -y && apt-get install --no-install-recommends -y \
         apt-utils \
@@ -65,6 +66,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         alsa-base \
         alsa-utils \
         file \
+        zsh \
         gnupg \
         curl \
         wget \
@@ -374,8 +376,7 @@ Pin-Priority: -1" > /etc/apt/preferences.d/firefox-nosnap && \
         vlc-plugin-visualization \
         xdg-user-dirs \
         xdg-utils \
-        firefox \
-        transmission-qt && \
+        firefox && \
     apt-get install --install-recommends -y \
         libreoffice \
         libreoffice-kf5 \
@@ -453,11 +454,7 @@ RUN if [ -d "/usr/libexec/sudo" ]; then SUDO_LIB="/usr/libexec/sudo"; else SUDO_
     chmod -f 4755 /usr/bin/sudo-root || echo 'Failed to set chmod setuid for root'
 USER 1000
 
-ENV PIPEWIRE_LATENCY="128/48000"
 ENV XDG_RUNTIME_DIR=/tmp/runtime-ubuntu
-ENV PIPEWIRE_RUNTIME_DIR="${PIPEWIRE_RUNTIME_DIR:-${XDG_RUNTIME_DIR:-/tmp}}"
-ENV PULSE_RUNTIME_PATH="${PULSE_RUNTIME_PATH:-${XDG_RUNTIME_DIR:-/tmp}/pulse}"
-ENV PULSE_SERVER="${PULSE_SERVER:-unix:${PULSE_RUNTIME_PATH:-${XDG_RUNTIME_DIR:-/tmp}/pulse}/native}"
 
 # dbus-daemon to the below address is required during startup
 ENV DBUS_SYSTEM_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR:-/tmp}/dbus-system-bus"

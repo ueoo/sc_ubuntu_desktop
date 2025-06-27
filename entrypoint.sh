@@ -21,6 +21,7 @@ ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime && echo "${TZ}" | tee /etc/ti
 
 # Set default display
 export DISPLAY="${DISPLAY:-:20}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/tmp}"
 
 if ! command -v nvidia-xconfig >/dev/null 2>&1; then
   # Install NVIDIA userspace driver components including X graphic libraries, keep contents same between docker-nvidia-glx-desktop and docker-nvidia-egl-desktop
@@ -63,15 +64,6 @@ if ! command -v nvidia-xconfig >/dev/null 2>&1; then
   fi
 fi
 
-
-# Enable Nvidia GPU support if detected
-if which nvidia-smi; then
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    export VK_DRIVER_FILES=/usr/share/vulkan/icd.d/nvidia_icd.json
-    export LIBVA_DRIVER_NAME=nvidia
-fi
 
 # Remove existing Xorg configuration
 if [ -f "/etc/X11/xorg.conf" ]; then
